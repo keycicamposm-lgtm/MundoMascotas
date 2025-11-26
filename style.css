@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 .body {
     background-color: #F0F4F8;
 }
@@ -142,3 +146,345 @@
 .stack-img:nth-child(1) { animation: swap 12s infinite ease-in-out; animation-delay: 0s; }
 .stack-img:nth-child(2) { animation: swap 12s infinite ease-in-out; animation-delay: 8s; }
 .stack-img:nth-child(3) { animation: swap 12s infinite ease-in-out; animation-delay: 16s; }
+
+/* SOLICITUDES DE AMISTAD */
+.friends-body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background-color: #F5F7FA; 
+}
+
+/*El tabbar superior*/
+
+.friends-header {
+    background-color: #ffffff;      
+    border-bottom: 1px solid #e5e5e5;
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.friends-header-icons {
+    display: flex;
+    gap: 60px;
+}
+
+/* Botones de iconos*/
+.friends-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 20px;
+    background-color: #f3f7fb;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 36px 36px;
+}
+
+
+.friends-icon--home {
+    background-image: url("./images/homementa.svg");
+}
+.friends-icon--home:hover,
+.friends-icon--home.active {
+    background-image: url("./images/homeaazul.svg");
+}
+
+.friends-icon--threads {
+    background-image: url("images/threadsmenta.svg");
+}
+.friends-icon--threads:hover,
+.friends-icon--threads.active {
+    background-image: url("images/threadsaazul.svg");
+}
+
+.friends-icon--friends {
+    background-image: url("images/amistadesmenta.svg");
+}
+.friends-icon--friends:hover,
+.friends-icon--friends.active {
+    background-image: url("images/amistadesaazul.svg");
+}
+
+.friends-icon--store {
+    background-image: url("images/tiendamenta.svg");
+}
+.friends-icon--store:hover,
+.friends-icon--store.active {
+    background-image: url("images/tiendaazul.svg");
+}
+
+.friends-icon:hover {
+    transform: translateY(-2px);
+    background-color: #eaf3ff;
+}
+
+.friends-icon.active {
+    background-color: #a7e3d5;
+    box-shadow: 0 0 0 2px #7ec8b3;
+}
+
+
+.friends-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 40px 24px;
+    min-height: calc(100vh - 70px);
+}
+
+
+.friends-sidebar {
+    border-right: 1px solid #e5e5e5;
+    padding: 24px 16px;
+    background-color: #F9FBFD;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
+}
+
+.sidebar-title {
+    font-size: 18px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px 0;
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.sidebar-item:hover {
+    background-color: #e5f5fb;
+}
+
+.sidebar-item.active {
+    background-color: #a7e3d5;
+}
+
+/* imagenes sidebar*/
+.sidebar-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px;
+    flex-shrink: 0;
+}
+
+/* Cambia las rutas por tus archivos reales */
+.sidebar-icon--requests {
+    background-image: url("images/amigosazul.svg");
+}
+.sidebar-item:hover .sidebar-icon--requests,
+.sidebar-item.active .sidebar-icon--requests {
+    background-image: url("images/amigosmenta.svg");
+}
+
+.sidebar-icon--allfriends {
+    background-image: url("images/requestsazul.svg");
+}
+.sidebar-item:hover .sidebar-icon--allfriends,
+.sidebar-item.active .sidebar-icon--allfriends {
+    background-image: url("images/requestsmenta.svg");
+}
+
+.sidebar-icon--notifications {
+    background-image: url("images/notificacionesazul.svg");
+}
+.sidebar-item:hover .sidebar-icon--notifications,
+.sidebar-item.active .sidebar-icon--notifications {
+    background-image: url("images/notificacionesmenta.svg");
+}
+
+
+/* Perfil usuario en la parte baja del sidebar */
+.sidebar-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.sidebar-profile-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-profile-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+.friends-content {
+    padding: 16px 24px 24px 32px;
+    background-color: #F5F7FA;
+}
+
+.friends-content-title {
+    font-size: 22px;
+    margin-bottom: 24px;
+    font-weight: 700;
+    text-align: left;
+}
+
+
+.friends-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+
+.friend-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 18px 16px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.friend-photo {
+    border-radius: 22px;
+    border: 2px solid #f0f0f0;
+    background-color: #fafafa;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    color: #4a4a4a;
+    margin-bottom: 14px;
+}
+
+.friend-name {
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #555555;
+}
+
+
+.btn-confirm,
+.btn-delete {
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
+}
+
+.btn-confirm {
+    background-color: #a7e3d5;
+}
+
+.btn-delete {
+    background-color: #f5f5f5;
+}
+
+
+@media (max-width: 1024px) {
+    .friends-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .friends-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .friends-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #e5e5e5;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .friends-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .friends-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* NOTIFICACIONES */
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.notification-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+}
+
+.notification-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+}
+
+
+
+/* like */
+.notification-icon--like {
+    background-image: url("images/like.svg"); 
+}
+
+/* comentario*/
+.notification-icon--comment {
+    background-image: url("images/comentario.svg"); 
+}
+
+.notification-text {
+    margin: 0;
+    font-size: 16px;
+    color: #111827;
+}
+
+.notification-user {
+    font-weight: 600;
+}
