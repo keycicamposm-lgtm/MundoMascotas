@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificaciones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="friends-body">
+
+    <!-- aca es para el html del tabbar -->
+    <div id="tabbar-container"></div>
+
+    <!-- sidebar -->
+    <div class="friends-layout">
+
+        <!-- menu de la izquierda-->
+        <aside class="friends-sidebar">
+            <div>
+                <h2 class="sidebar-title">Amigos</h2>
+
+                <ul class="sidebar-menu">
+                    <li class="sidebar-item" onclick="window.location.href='solicitudes.html'">
+                        <span class="sidebar-icon sidebar-icon--requests"></span>
+                        <span>Solicitudes de amistad</span>
+                    </li>
+
+                    <li class="sidebar-item" onclick="window.location.href='amistades.html'">
+                        <span class="sidebar-icon sidebar-icon--allfriends"></span>
+                        <span>Todos los amigos</span>
+                    </li>
+
+                    <li class="sidebar-item active">
+                        <span class="sidebar-icon sidebar-icon--notifications"></span>
+                        <span>Notificaciones</span>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="sidebar-profile">
+                <div class="sidebar-profile-avatar">🐾</div>
+                <div class="sidebar-profile-text">
+                    <span>Perfil de Usuario</span>
+                </div>
+            </div>
+        </aside>
+
+    
+        <main class="friends-content">
+            <h2 class="friends-content-title">Notificaciones</h2>
+
+            <div class="notification-list">
+
+                <article class="notification-card">
+                    <div class="notification-icon notification-icon--like"></div>
+                    <p class="notification-text">
+                        <span class="notification-user">(Usuario)</span> le dio like a tu post.
+                    </p>
+                </article>
+
+                <article class="notification-card">
+                    <div class="notification-icon notification-icon--like"></div>
+                    <p class="notification-text">
+                        <span class="notification-user">(Usuario)</span> le dio like a tu post.
+                    </p>
+                </article>
+
+                <article class="notification-card">
+                    <div class="notification-icon notification-icon--comment"></div>
+                    <p class="notification-text">
+                        <span class="notification-user">(Usuario)</span> comentó en tu post.
+                    </p>
+                </article>
+
+                <article class="notification-card">
+                    <div class="notification-icon notification-icon--comment"></div>
+                    <p class="notification-text">
+                        <span class="notification-user">(Usuario)</span> comentó en tu post.
+                    </p>
+                </article>
+
+            </div>
+        </main>
+
+    </div>
+
+    <!--script para el tab bar-->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('tabbar-container');
+
+        fetch('tabbar.html')
+          .then(response => response.text())
+          .then(html => {
+            container.innerHTML = html;
+
+            const topButtons = container.querySelectorAll('.friends-icon');
+            topButtons.forEach(btn => {
+              btn.addEventListener('click', () => {
+                topButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+              });
+            });
+          })
+          .catch(err => {
+            console.error('Error cargando tabbar:', err);
+          });
+      });
+    </script>
+</body>
+</html>
