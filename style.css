@@ -458,7 +458,6 @@ html, body {
 }
 
 .friends-icon.active {
-    background-color: #a7e3d5;
     box-shadow: 0 0 0 2px #7ec8b3;
 }
 
@@ -466,9 +465,10 @@ html, body {
 .friends-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px 24px 40px 24px;
+    width: 100%;        
+    max-width: none;    
+    margin: 0;          
+    padding: 24px 24px 40px 0;  
     min-height: calc(100vh - 70px);
 }
 
