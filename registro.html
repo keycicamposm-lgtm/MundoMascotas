@@ -3,10 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro
-    </title>
+    <title>Mundo Mascotas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"></head>
 </head>
-<body>
-    <h1>hola mundo</h1>
+<body class="body-register">
+    
+
+<!--Sección de Registro-->
+<section class="register-page d-flex justify-content-center align-items-center vh-100">
+    <div class="register-card">
+            <div class="col justify-content-center align-items-center text-center align-items-center" id="register">
+      <img src="./images/LogoMundoMascotas.svg" id="logo_login" alt="logo mundo mascotas">
+
+                <!-- FOTO perrito -->
+            <div class="avatar-section">
+                <div class="avatar-circle">
+                    <img src="./images/AvatarRegister.svg" alt="Foto de perfil">
+                </div>
+                  <label for="fotoPerfil" class="avatar-text">Elegir foto</label>
+    <input 
+        type="file" 
+        id="fotoPerfil" 
+        name="fotoPerfil"
+        accept="image/*"
+        style="display: none;">
+            </div>
+
+
+
+        <form action="/login" method="post" >
+             <input type="text" id="username_input" name="username" placeholder="Nombre" required>
+            <br>
+            <input type="text" id="password_input" name="password" placeholder="Apellidos" required>
+            <br>
+            <input type="email" id="username_input" name="username" placeholder="Correo Electrónico" required>
+            <br>
+            <input type="tel" id="password_input" name="password" placeholder="Número de teléfono" required>
+            <br>
+             <input type="password" id="password_input" name="password" placeholder="Contraseña" required>
+            <br>
+            <button type="submit" id="login_button">Crear cuenta</button>
+        </div>
+        </div>
+</section>
+      
+            
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
