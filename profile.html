@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Mi perfil</title>
+</head>
+<body>
+<!--Tab bar-->
+    <div id="tabbar-container"></div>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('tabbar-container');
+
+        fetch('tabbar.html')
+          .then(response => response.text())
+          .then(html => {
+            container.innerHTML = html;
+
+            const topButtons = container.querySelectorAll('.friends-icon');
+            topButtons.forEach(btn => {
+              btn.addEventListener('click', () => {
+                topButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+              });
+            });
+          })
+          .catch(err => {
+            console.error('Error cargando tabbar:', err);
+          });
+      });
+    </script>   
+    
+<!--Contenido de la página de perfil-->
+ <!-- PERFIL DE USUARIO -->
+<section class="profile-wrapper">
+
+  <!-- Cabecera del perfil -->
+  <header class="profile-header">
+    <div class="profile-main">
+      <div class="profile-avatar">
+        <!-- Cambia el src por tu imagen -->
+        <img src="./images/AvatarRegister.svg" alt="Foto de perfil">
+      </div>
+
+      <div class="profile-info">
+        <h1 class="profile-username">Nombre de usuario</h1>
+
+        <div class="profile-stats">
+          <span>0 posts</span>
+          <span>0 amigos</span>
+        </div>
+
+        <p class="profile-description">Descripción</p>
+      </div>
+    </div>
+
+    <button class="profile-edit-btn">Editar Perfil</button>
+  </header>
+
+
+  <!-- Grid de fotos -->
+  <section class="profile-photos">
+    <div class="photo-card">FOTO</div>
+    <div class="photo-card">FOTO</div>
+    <div class="photo-card">FOTO</div>
+  </section>
+
+</section>
+
+
+
+</body>
+</html>
