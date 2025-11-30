@@ -37,15 +37,10 @@
                 </ul>
 
             </div>
-
-            <div class="sidebar-profile">
-                <div class="sidebar-profile-avatar">🐾</div>
-                <div class="sidebar-profile-text">
-                    <span>Perfil de Usuario</span>
-                </div>
-            </div>
+           
+            
         </aside>
-
+     
     
         <main class="friends-content">
             <h2 class="friends-content-title">Notificaciones</h2>
@@ -108,5 +103,20 @@
           });
       });
     </script>
+
+    <div class="sidebar-profile" id="btnProfile">
+    <div class="sidebar-profile-avatar">🐾</div>
+    <div class="sidebar-profile-text">
+        <span>Perfil de Usuario</span>
+    </div>
+</div>
+
+
+        <script>
+    document.getElementById("btnProfile").addEventListener("click", function() {
+        window.location.href = "profile.html";
+    });
+</script>
+
 </body>
 </html>
