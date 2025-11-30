@@ -1273,6 +1273,10 @@ html, body {
     padding: 16px 20px 18px;
 }
 
+.thread-card:hover {
+    transform: translateY(-2px);
+}
+
 .thread-card-header {
     display: flex;
     align-items: center;
@@ -1425,12 +1429,6 @@ html, body {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-}
-
-.thread-modal-main-reply-link {
-    font-size: 14px;
-    font-weight: 600;
-    color: #6EC1E4;
 }
 
 /* Lista de respuestas */
