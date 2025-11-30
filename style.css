@@ -723,3 +723,407 @@ html, body {
 .notification-user {
     font-weight: 600;
 }
+
+/* 
+    INICIO / FEED PRINCIPAL (Mundo Mascotas)
+    Fondo y fuente de la página de inicio 
+*/
+.inicio-body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background-color: #F5F7FA;
+}
+
+/* Contenedor de las dos columnas */
+.inicio-layout {
+    display: flex;
+    min-height: calc(100vh - 90px);
+}
+
+/* HOVER: se sube un poquitito */
+.inicio-sidebar-profile:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.22);
+}
+
+/* Botón circular de perfil dentro del panel */
+.inicio-sidebar-profile {
+    position: fixed;          
+    left: 13px;               
+    bottom: 24px;             
+
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Panel blanco de la izquierda */
+.inicio-sidebar {
+    width: 90px;
+    background-color: #FFFFFF;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 24px;
+}
+
+
+/* Contenedor general que centra el feed */
+.inicio-wrapper {
+    flex: 1; /* ocupa todo el espacio restante */
+    display: flex;
+    justify-content: center;
+    padding: 24px 40px 40px;
+}
+
+/* Lista de publicaciones */
+.inicio-list {
+    width: 100%;
+    max-width: 900px; /* ancho máximo del card */
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Tarjeta de una publicación */
+.inicio-card {
+    width: 100%;
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 32px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+    padding: 24px 24px 20px;
+}
+
+/* Header: usuario + botón seguir */
+.inicio-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+/* Bloque usuario */
+.inicio-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Avatar circular */
+.inicio-avatar-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 26px; /* para el emoji */
+}
+
+.inicio-avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Nombre de usuario */
+.inicio-username {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+}
+
+/* Fecha de publicación */
+.inicio-date {
+    font-size: 13px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+/* Botón "Seguir" */
+.inicio-seguir {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    color: #6EC1E4;
+    cursor: pointer;
+}
+
+.inicio-seguir:hover {
+    transform: translateY(-2px);
+    border-bottom: 1px solid #6EC1E4;
+}
+
+/* Contenedor de la imagen principal de la publicación */
+.inicio-card-wrapper {
+    border-radius: 24px;
+    overflow: hidden;
+    margin-bottom: 16px;
+    max-height: 420px;
+    display: flex;
+}
+
+/* Imagen de la publicación */
+.inicio-image {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: auto;
+}
+
+/* Footer: botones Me gusta / Comentar */
+.inicio-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 6px;
+}
+
+/* Estilo base de los dos botones */
+.inicio-like-button,
+.inicio-comment-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;               
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 17px;
+    padding: 8px 14px;       
+    border-radius: 999px;
+    color: #4b5563;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+/* Iconos específicos del feed (independientes de notification-icon) */
+.inicio-like-icon,
+.inicio-comment-icon {
+    width: 40px;             
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px 22px; /* tamaño del svg dentro del círculo */
+}
+
+/* Imagen para cada icono */
+.inicio-like-icon {
+    background-image: url("images/like.svg");
+    background-size: 48px 48px;
+}
+
+.inicio-comment-icon {
+    background-image: url("images/comentario.svg");
+    background-size: 50px 50px;
+}
+
+/* Se sube un poquitito */
+.inicio-like-button:hover,
+.inicio-comment-button:hover {
+    transform: translateY(-2px);
+    background-color: #f3f7ff;
+}
+
+
+/* Responsivo para pantallas pequeñas */
+@media (max-width: 768px) {
+    .inicio-wrapper {
+        padding: 24px 8px 40px;
+    }
+
+    .inicio-card {
+        border-radius: 24px;
+        padding: 18px 16px 16px;
+    }
+}
+
+/* MODAL DE COMENTARIOS */ 
+.comment-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.45);
+    display: none; /* oculto por defecto */
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.comment-modal-overlay.show {
+    display: flex; /* se muestra cuando tiene la clase 'show' */
+}
+
+.comment-modal-card {
+    width: 680px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 14px 35px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+    font-family: Poppins, sans-serif;
+}
+
+.comment-modal-topbar {
+    background: #ffffff;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.comment-modal-close {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("images/xcerrar.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+    padding: 0;
+}
+
+.comment-modal-content {
+    padding: 0 18px 14px 18px;
+}
+
+/* Header del modal */
+.comment-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0 12px 0;
+}
+
+.comment-modal-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-modal-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 22px; 
+}
+
+.comment-modal-username {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.comment-modal-date {
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 2px;
+}
+
+.comment-modal-follow {
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6EC1E4;
+    cursor: pointer;
+}
+
+.comment-modal-follow:hover {
+    transform: translateY(-2px);
+    border-bottom: 1px solid #6EC1E4;
+}
+
+.comment-modal-image-wrapper {
+    background: gray;
+}
+
+.comment-modal-image {
+    width: 100%;
+    display: block;
+    height: 380px;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Footer del modal: mini usuario + input comentar */
+.comment-modal-footer {
+    padding: 10px 0 0;
+    background: #f9fafb;
+}
+
+.comment-modal-bottom-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.comment-modal-avatar--small {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+}
+
+.comment-modal-bottom-text {
+    font-size: 13px;
+    color: #4b5563;
+    display: flex;
+    gap: 4px;
+}
+
+.comment-modal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+.comment-modal-input {
+    flex: 1;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    padding: 8px 14px;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Cambio de borde y sombra al enfocar el input */
+.comment-modal-input:focus {
+    border-color: #6EC1E4;
+    box-shadow: 0 0 0 1px rgba(110, 193, 228, 0.4);
+}
+
+.comment-modal-publish {
+    border: none;
+    background: #ffffff;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}

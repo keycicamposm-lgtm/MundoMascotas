@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascotas Inicio </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="inicio-body"> 
+    
+    <!-- Inclusión del Tabbar -->
+    <div id="tabbar-container"></div>
+
+    <!-- Layout: columna izquierda + contenido -->
+    <div class="inicio-layout">
+
+        <!-- COLUMNA IZQUIERDA (panel blanco) -->
+        <aside class="inicio-sidebar">
+
+            <!-- Botón de perfil al fondo del panel -->
+            <div class="inicio-sidebar-profile" onclick="window.location.href='profile.html'">
+            🐾
+            </div>
+        </aside>
+     
+        <!-- Contenido principal de la página de inicio -->
+        <main class="inicio-wrapper">
+
+            <!-- Formato seguido por las publicaciones -->
+            <div id="inicio-list" class="inicio-list"></div>
+        </main>   
+    </div>
+
+    <!-- Ventana emergente de COMENTARIOS: MODAL -->
+    <div id="comment-modal" class="comment-modal-overlay">
+        <div class="comment-modal-card">
+
+            <!-- Barrita superior solo con la X -->
+            <div class="comment-modal-topbar">
+                <button id="comment-modal-close"
+                        class="comment-modal-close"
+                        aria-label="Cerrar"></button>
+            </div>
+
+            <!-- Contenido del card de comentarios -->
+            <div class="comment-modal-content">
+
+                <!-- Header estilo post: avatar + nombre + fecha + seguir -->
+                <header class="comment-modal-header">
+                    <div class="comment-modal-user">
+                        <div class="comment-modal-avatar" id="modal-avatar">
+                            🐾
+                        </div>
+                        <div>
+                            <div id="modal-username" class="comment-modal-username">Nombre de usuario</div>
+                            <div id="modal-date" class="comment-modal-date">Fecha de publicación</div>
+                        </div>
+                    </div>
+
+                    <button class="comment-modal-follow">Seguir</button>
+                </header>
+
+                <!-- Imagen de la publicación -->
+                <div class="comment-modal-image-wrapper">
+                    <img id="modal-image" src="" alt="Imagen de la publicación" class="comment-modal-image">
+                </div>
+            
+                <!-- Footer con comentario de ejemplo + caja para escribir -->
+                <footer class="comment-modal-footer">
+                    <div class="comment-modal-bottom-user">
+                        <div class="comment-modal-avatar comment-modal-avatar--small">
+                                🐾
+                        </div>
+                        <span class="comment-modal-bottom-text"> 
+                            <strong id="modal-username-footer">Nombre de Usuario</strong>
+                            <span id="modal-comment-text">Comentario</span>
+                        </span>
+                    </div>
+
+                    <div class="comment-modal-input-row">
+                        <input type="text" class="comment-modal-input" placeholder="Añadir comentario...">
+                        <button class="comment-modal-publish">Publicar</button>
+                    </div>
+                </footer>
+            
+            </div>        
+        </div>
+    </div>
+
+      <script>
+        // Aquí guardamos los posts que vienen de la base de datos
+        let postsGlobal = [];
+
+        /* 
+            Generar el HTML de UNA publicación en el feed de inicio.
+            Esta parte, no depende de Firebase, sino de cómo queremos mostrar cada publicación.
+        */
+        function crearPostCard(post) {
+            return `
+                <!-- Información de la publicación -->
+                <section class="inicio-card" data-post-id="${post.id}">
+                    <header class="inicio-card-header">
+                    <div class="inicio-user">
+                        <div class="inicio-avatar-circle">
+                        <!-- Por ahora, si no hay avatar usamos un emoji -->
+                        ${post.userAvatarUrl 
+                            ? `<img src="${post.userAvatarUrl}" alt="Avatar de ${post.username}">`
+                            : "🐶"}
+                        </div>
+
+                        <div>
+                        <div class="inicio-username">${post.username}</div>
+                        <div class="inicio-date">${post.publishedAt}</div>
+                        </div>
+                    </div>
+
+                    <button class="inicio-seguir">Seguir</button>
+                    </header>
+
+                    <!-- Imagen de la publicación -->
+                    <div class="inicio-card-wrapper">
+                    <img src="${post.imageUrl}" alt="Imagen de la publicación" class="inicio-image">
+                    </div>
+                    
+                    <!-- Botones de interacción -->
+                    <footer class="inicio-card-footer">
+                        <button class="inicio-like-button">
+                            <span class="inicio-like-icon"></span>
+                            <span>Me gusta</span>
+                        </button>
+
+                        <button class="inicio-comment-button">
+                            <span class="inicio-comment-icon"></span>
+                            <span>Comentar</span>
+                        </button>
+                    </footer>     
+                </section>
+            `;
+        }
+
+        /*
+            Previamente obtenemos los datos de las publicaciones desde la base de datos.
+            Ahora, renderizamos todas las publicaciones en el contenedor de inicio, para que se muestren en la página.
+        */
+        function renderInicio(posts) {
+            postsGlobal = posts; // Al inicio solo se renderizaba una vez, pero ahora lo usamos para actualizar el modal
+            const inicioList = document.getElementById('inicio-list');
+            inicioList.innerHTML = posts.map(crearPostCard).join('');
+        }
+
+        // Ejemplo de uso con datos ficticios
+        async function loadPostsMock() {
+            const mockPosts = [
+            {
+                id: '1',
+                username: 'Nombre de usuario',
+                publishedAt: '27 de noviembre 2025',
+                imageUrl: 'images/login_image1.png',
+                userAvatarUrl: 'images/AvatarRegister.svg',
+                commentPreview: 'Comentario de ejemplo'
+            },
+            {
+                id: '2',
+                username: 'Otro usuario',
+                publishedAt: '26 de noviembre 2025',
+                imageUrl: 'images/login_image2.png',
+                userAvatarUrl: 'images/AvatarRegister.svg',
+                commentPreview: 'Otro comentario'
+            }
+            ];
+
+        // Cuando tengamos la base de datos, aquí llamamos a la función real: const posts = await getPostsFromFirebase();
+        renderInicio(mockPosts);
+        }
+
+        // Llena el modal con los datos del post y lo muestra
+        function abrirModalComentarios(post) {
+            document.getElementById('modal-username').textContent = post.username;
+            document.getElementById('modal-date').textContent = post.publishedAt;
+            document.getElementById('modal-username-footer').textContent = post.username;
+            document.getElementById('modal-comment-text').textContent = post.commentPreview || 'Comentario';
+
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = post.imageUrl;
+            modalImage.alt = `Publicación de ${post.username}`;
+
+            document.getElementById('comment-modal').classList.add('show');
+        }
+
+        /* Cargar el tabbar */
+        document.addEventListener('DOMContentLoaded', () => {
+        
+        const container = document.getElementById('tabbar-container');
+
+        fetch('tabbar.html')
+          .then(response => response.text())
+          .then(html => {
+            container.innerHTML = html;
+
+            const topButtons = container.querySelectorAll('.friends-icon');
+            topButtons.forEach(btn => {
+              btn.addEventListener('click', () => {
+                topButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+              });
+            });
+
+            const homeBtn = container.querySelector('.friends-icon--home');
+            if (homeBtn) homeBtn.classList.add('active');
+          })
+          .catch(err => console.error('Error cargando tabbar:', err));
+
+        /* En espera de la base de datos, por ahora usamos los datos MOCK */
+        loadPostsMock();
+
+        // MODAL
+        const modal = document.getElementById('comment-modal');
+        const closeModalBtn = document.getElementById('comment-modal-close');
+
+        // Cerrar con la x
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        // Cerrar al hacer clic fuera del card
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
+        // Abrir modal al hacer clic en el botón de comentar
+        document.addEventListener('click', (event) => {
+            const btn = event.target.closest('.inicio-comment-button'); // va almacenando donde ocurrió el botón, para así definir si continuar o no
+            if (!btn) return;
+
+            const card = btn.closest('.inicio-card'); // ubica exactamente en qué publicación se está comentando
+            const postId = card.dataset.postId; // toma el id de la publicación 
+            const post = postsGlobal.find(p => p.id === postId); // busca el post en el array global
+            if (!post) return;
+
+            abrirModalComentarios(post); // abre el modal con los datos del post
+        })
+      });
+
+      </script>
+</body>
+</html>
