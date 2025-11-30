@@ -215,6 +215,7 @@ html, body {
 
 
 /*Perfil*/
+
 /* CONTENEDOR GENERAL DEL PERFIL */
 .profile-wrapper {
   max-width: 1100px;
@@ -457,7 +458,6 @@ html, body {
 }
 
 .friends-icon.active {
-    background-color: #a7e3d5;
     box-shadow: 0 0 0 2px #7ec8b3;
 }
 
@@ -465,9 +465,10 @@ html, body {
 .friends-layout {
     display: grid;
     grid-template-columns: 240px 1fr;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px 24px 40px 24px;
+    width: 100%;        
+    max-width: none;    
+    margin: 0;          
+    padding: 0;  
     min-height: calc(100vh - 70px);
 }
 
@@ -552,21 +553,40 @@ html, body {
 
 /* Perfil usuario en la parte baja del sidebar */
 .sidebar-profile {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+
+    background: white;
+    padding: 12px 18px;
+    border-radius: 50px;
+
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 40px;
+
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+    cursor: pointer;
+    z-index: 9999;
+
+    transition: all .2s ease;
+}
+
+.sidebar-profile:hover {
+    transform: scale(1.05);
 }
 
 .sidebar-profile-avatar {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
+
+    background: #EAF6F6;
     border-radius: 50%;
-    background-color: #ffffff;
     display: flex;
-    align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    align-items: center;
+
+    font-size: 22px;
 }
 
 .sidebar-profile-text {
@@ -643,6 +663,16 @@ html, body {
 
 .btn-delete {
     background-color: #f5f5f5;
+}
+.btn-Friends_delete {
+    background-color: #a7e3d5;
+    border: none;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 6px;
 }
 
 
