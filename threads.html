@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mundo Mascotas Threads</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="threads-body">
+
+    <!-- Tabbar superior -->
+    <div id="tabbar-container"></div>
+
+    <!-- Contenido principal -->
+    <main class="threads-wrapper">
+
+        <!-- Caja para crear nuevo thread -->
+        <section class="threads-new-card">
+            <div class="threads-new-avatar" id="threads-current-avatar">
+                🐾
+            </div>
+            <input
+                type="text"
+                id="thread-input"
+                class="threads-new-input"
+                placeholder="Qué estás pensando..."
+            />
+            <button id="thread-publish" class="threads-new-button">Publicar</button>
+        </section>
+
+        <!-- Título -->
+        <h1 class="threads-title">Threads</h1>
+
+        <!-- CONTENEDOR GRANDE DE THREADS -->
+        <section class="threads-container">
+            <section id="threads-list" class="threads-list"></section>
+        </section>
+    </main>
+
+    <!-- MODAL DE RESPUESTAS DEL THREAD -->
+    <div id="thread-modal" class="thread-modal-overlay">
+        <div class="thread-modal-card">
+
+            <!-- barra superior con X -->
+            <div class="thread-modal-topbar">
+                <button id="thread-modal-close"
+                        class="thread-modal-close"
+                        aria-label="Cerrar"></button>
+            </div>
+
+            <!-- contenido interior -->
+            <div class="thread-modal-content">
+
+                <!-- hilo principal -->
+                <section class="thread-modal-main">
+                    <header class="thread-modal-main-header">
+                        <div class="thread-user">
+                            <div class="thread-avatar" id="thread-modal-main-avatar">
+                                🐾
+                            </div>
+                            <div>
+                                <div id="thread-modal-main-username" class="thread-username">
+                                    Nombre de usuario
+                                </div>
+                                <div id="thread-modal-main-date" class="thread-date">
+                                    Fecha de publicación
+                                </div>
+                            </div>
+                        </div>
+
+                        <span class="thread-modal-main-reply-link">Responder</span>
+                    </header>
+
+                    <p id="thread-modal-main-text" class="thread-text">
+                        Texto del hilo principal...
+                    </p>
+                </section>
+
+                <!-- lista de respuestas -->
+                <section id="thread-modal-replies" class="thread-modal-replies">
+                    <!-- se rellena por JS -->
+                </section>
+
+                <!-- input inferior para responder -->
+                <footer class="thread-modal-footer">
+                    <div class="thread-modal-input-row">
+                        <div class="thread-modal-avatar" id="thread-modal-current-avatar">
+                            🐾
+                        </div>
+                        <input
+                            type="text"
+                            id="thread-reply-input"
+                            class="thread-modal-input"
+                            placeholder="Añadir comentario..."
+                        />
+                        <button id="thread-reply-publish" class="thread-modal-publish">
+                            Publicar
+                        </button>
+                    </div>
+                </footer>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // USUARIO ACTUAL (simulado)
+        const currentUser = {
+            id: 'u1',
+            username: 'Nombre de usuario actual',
+            avatarUrl: 'images/AvatarRegister.svg'
+        };
+
+        // "BASE DE DATOS" EN MEMORIA
+        let threadsGlobal = [];
+        let currentThreadIdForModal = null;  // qué hilo está abierto en el popup
+
+        // helpers de renderizado
+        function crearThreadCard(thread) {
+            return `
+                <article class="thread-card" data-thread-id="${thread.id}">
+                    <header class="thread-card-header">
+                        <div class="thread-user">
+                            <div class="thread-avatar">
+                                ${
+                                    thread.userAvatarUrl
+                                        ? `<img src="${thread.userAvatarUrl}" alt="Avatar de ${thread.username}">`
+                                        : "🐶"
+                                }
+                            </div>
+                            <div>
+                                <div class="thread-username">${thread.username}</div>
+                                <div class="thread-date">${thread.publishedAt}</div>
+                            </div>
+                        </div>
+
+                        <button class="thread-replies-button">
+                            Respuestas
+                        </button>
+                    </header>
+
+                    <p class="thread-text">
+                        ${thread.text}
+                    </p>
+                </article>
+            `;
+        }
+
+        function renderThreads(threads) {
+            threadsGlobal = threads;
+            const list = document.getElementById('threads-list');
+            list.innerHTML = threads.map(crearThreadCard).join('');
+        }
+
+        // SIMULACIÓN DE BD: HILOS 
+        async function loadThreadsFromDatabase() {
+            const mockThreads = [
+                {
+                    id: 't1',
+                    userId: 'u2',
+                    username: 'Nombre de usuario',
+                    userAvatarUrl: 'images/AvatarRegister.svg',
+                    publishedAt: '27 de noviembre 2025',
+                    text: 'Inserte comentario, pregunta, experiencia, consejo, entre otros...'
+                },
+                {
+                    id: 't2',
+                    userId: 'u3',
+                    username: 'Nombre de usuario',
+                    userAvatarUrl: 'images/AvatarRegister.svg',
+                    publishedAt: '26 de noviembre 2025',
+                    text: 'Inserte comentario, pregunta, experiencia, consejo, entre otros...'
+                },
+                {
+                    id: 't3',
+                    userId: 'u4',
+                    username: 'Nombre de usuario',
+                    userAvatarUrl: 'images/AvatarRegister.svg',
+                    publishedAt: '25 de noviembre 2025',
+                    text: 'Inserte comentario, pregunta, experiencia, consejo, entre otros...'
+                }
+            ];
+            return mockThreads;
+        }
+
+        async function saveThreadToDatabase(threadData) {
+            const fakeId = 't-' + Date.now();
+            return { ...threadData, id: fakeId };
+        }
+
+        // SIMULACIÓN DE BD: RESPUESTAS 
+        async function loadRepliesFromDatabase(threadId) {
+            // En la versión real filtrarías por threadId.
+            const mockReplies = [
+                {
+                    id: 'r1',
+                    threadId,
+                    userId: 'u5',
+                    username: 'Nombre de usuario',
+                    userAvatarUrl: 'images/AvatarRegister.svg',
+                    publishedAt: '27 de noviembre 2025',
+                    text: 'Respuesta del usuario'
+                },
+                {
+                    id: 'r2',
+                    threadId,
+                    userId: 'u6',
+                    username: 'Nombre de usuario',
+                    userAvatarUrl: 'images/AvatarRegister.svg',
+                    publishedAt: '27 de noviembre 2025',
+                    text: 'Respuesta del usuario'
+                }
+            ];
+            return mockReplies;
+        }
+
+        async function saveReplyToDatabase(threadId, replyData) {
+            const fakeId = 'r-' + Date.now();
+            return { ...replyData, id: fakeId, threadId };
+        }
+
+        function crearReplyItem(reply) {
+            return `
+                <article class="thread-reply">
+                    <header class="thread-reply-header">
+                        <div class="thread-user">
+                            <div class="thread-avatar">
+                                ${
+                                    reply.userAvatarUrl
+                                        ? `<img src="${reply.userAvatarUrl}" alt="Avatar de ${reply.username}">`
+                                        : "🐶"
+                                }
+                            </div>
+                            <div>
+                                <div class="thread-username">${reply.username}</div>
+                                <div class="thread-date">${reply.publishedAt}</div>
+                            </div>
+                        </div>
+                    </header>
+                    <p class="thread-reply-text">
+                        ${reply.text}
+                    </p>
+                </article>
+            `;
+        }
+
+        function renderReplies(replies) {
+            const container = document.getElementById('thread-modal-replies');
+            container.innerHTML = replies.map(crearReplyItem).join('');
+        }
+
+        // PUBLICAR HILO NUEVO
+        async function handlePublishThread() {
+            const input = document.getElementById('thread-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const now = new Date();
+            const publishedAt = now.toLocaleDateString('es-CR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const threadData = {
+                userId: currentUser.id,
+                username: currentUser.username,
+                userAvatarUrl: currentUser.avatarUrl || null,
+                text: text,
+                publishedAt: publishedAt
+            };
+
+            const savedThread = await saveThreadToDatabase(threadData);
+
+            threadsGlobal.unshift(savedThread);
+            renderThreads(threadsGlobal);
+
+            input.value = '';
+        }
+
+        // ABRIR / CERRAR MODAL DE RESPUESTAS
+        async function abrirThreadModal(thread) {
+            currentThreadIdForModal = thread.id;
+
+            // Rellenar parte superior con el hilo principal
+            const mainUsername = document.getElementById('thread-modal-main-username');
+            const mainDate = document.getElementById('thread-modal-main-date');
+            const mainText = document.getElementById('thread-modal-main-text');
+            const mainAvatar = document.getElementById('thread-modal-main-avatar');
+
+            mainUsername.textContent = thread.username;
+            mainDate.textContent = thread.publishedAt;
+            mainText.textContent = thread.text;
+
+            if (thread.userAvatarUrl) {
+                mainAvatar.innerHTML = `<img src="${thread.userAvatarUrl}" alt="Avatar de ${thread.username}">`;
+            } else {
+                mainAvatar.textContent = '🐾';
+            }
+
+            // Avatar de usuario actual en el input de abajo
+            const currentAvatar = document.getElementById('thread-modal-current-avatar');
+            if (currentUser.avatarUrl) {
+                currentAvatar.innerHTML = `<img src="${currentUser.avatarUrl}" alt="Avatar de ${currentUser.username}">`;
+            } else {
+                currentAvatar.textContent = '🐾';
+            }
+
+            // Cargar respuestas
+            const replies = await loadRepliesFromDatabase(thread.id);
+            renderReplies(replies);
+
+            // Mostrar modal
+            const modal = document.getElementById('thread-modal');
+            modal.classList.add('show');
+        }
+
+        function cerrarThreadModal() {
+            const modal = document.getElementById('thread-modal');
+            modal.classList.remove('show');
+            currentThreadIdForModal = null;
+            document.getElementById('thread-reply-input').value = '';
+        }
+
+        // PUBLICAR RESPUESTA DESDE EL MODAL
+        async function handlePublishReply() {
+            const input = document.getElementById('thread-reply-input');
+            const text = input.value.trim();
+            if (!text || !currentThreadIdForModal) return;
+
+            const now = new Date();
+            const publishedAt = now.toLocaleDateString('es-CR', {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            const replyData = {
+                userId: currentUser.id,
+                username: currentUser.username,
+                userAvatarUrl: currentUser.avatarUrl || null,
+                text: text,
+                publishedAt: publishedAt
+            };
+
+            const savedReply = await saveReplyToDatabase(currentThreadIdForModal, replyData);
+
+            // Volvemos a cargar respuestas (en la vida real refrescarías desde la BD)
+            const existing = await loadRepliesFromDatabase(currentThreadIdForModal);
+            const allReplies = [savedReply, ...existing];
+            renderReplies(allReplies);
+
+            input.value = '';
+        }
+
+        // INICIO DE LA PÁGINA
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('tabbar-container');
+
+            // Cargar tabbar superior
+            fetch('tabbar.html')
+                .then(response => response.text())
+                .then(html => {
+                    container.innerHTML = html;
+
+                    const topButtons = container.querySelectorAll('.friends-icon');
+                    topButtons.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            topButtons.forEach(b => b.classList.remove('active'));
+                            btn.classList.add('active');
+                        });
+                    });
+
+                    const threadsBtn = container.querySelector('.friends-icon--threads');
+                    if (threadsBtn) threadsBtn.classList.add('active');
+                })
+                .catch(err => console.error('Error cargando tabbar:', err));
+
+            // Avatar del usuario actual en la caja de nuevo thread
+            const avatarDiv = document.getElementById('threads-current-avatar');
+            if (currentUser.avatarUrl) {
+                avatarDiv.innerHTML = `<img src="${currentUser.avatarUrl}" alt="Avatar de ${currentUser.username}">`;
+            } else {
+                avatarDiv.textContent = '🐾';
+            }
+
+            // Cargar threads iniciales
+            const threadsFromDb = await loadThreadsFromDatabase();
+            renderThreads(threadsFromDb);
+
+            // Publicar hilo nuevo
+            const publishBtn = document.getElementById('thread-publish');
+            publishBtn.addEventListener('click', handlePublishThread);
+
+            const input = document.getElementById('thread-input');
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handlePublishThread();
+                }
+            });
+
+            // lógica del modal
+            const threadModal = document.getElementById('thread-modal');
+            const threadModalClose = document.getElementById('thread-modal-close');
+
+            threadModalClose.addEventListener('click', cerrarThreadModal);
+
+            threadModal.addEventListener('click', (e) => {
+                if (e.target === threadModal) {
+                    cerrarThreadModal();
+                }
+            });
+
+            // Abrir modal al hacer clic en "Respuestas"
+            document.addEventListener('click', (e) => {
+                const btn = e.target.closest('.thread-replies-button');
+                if (!btn) return;
+
+                const card = btn.closest('.thread-card');
+                const threadId = card.dataset.threadId;
+                const thread = threadsGlobal.find(t => t.id === threadId);
+                if (!thread) return;
+
+                abrirThreadModal(thread);
+            });
+
+            // Publicar respuesta desde el modal
+            const replyPublishBtn = document.getElementById('thread-reply-publish');
+            replyPublishBtn.addEventListener('click', handlePublishReply);
+
+            const replyInput = document.getElementById('thread-reply-input');
+            replyInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handlePublishReply();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

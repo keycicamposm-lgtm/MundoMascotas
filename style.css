@@ -1157,3 +1157,381 @@ html, body {
     font-weight: 600;
     cursor: pointer;
 }
+
+/* THREADS (HILOS) */
+
+.threads-body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background-color: #F5F7FA;
+}
+
+.threads-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 40px 40px;
+}
+
+/* Caja para crear nuevo thread */
+.threads-new-card {
+    background-color: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 24px;
+    margin-bottom: 32px;
+}
+
+.threads-new-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.threads-new-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.threads-new-input {
+    flex: 1;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    padding: 9px 16px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.10);
+    background: #ffffff;
+}
+
+.threads-new-input::placeholder {
+    color: #9ca3af;
+}
+
+.threads-new-input:focus {
+    border-color: #6EC1E4;
+    box-shadow: 0 0 0 1px rgba(110, 193, 228, 0.35);
+}
+
+.threads-new-button {
+    border: none;
+    border-radius: 999px;
+    padding: 9px 22px;
+    background-color: #3DAC9A;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.threads-new-button:hover {
+    background-color: #A8E6CF;
+    color: #1F2937;
+}
+
+/* Título "Threads" */
+.threads-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+/* CONTENEDOR GRANDE que envuelve todas las cards */
+.threads-container {
+    background-color: #ffffff;
+    border-radius: 28px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+    padding: 18px 20px 22px;
+    margin-top: 8px;
+}
+
+/* Lista interna de cards */
+.threads-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+}
+
+/* Card individual de thread */
+.thread-card {
+    background-color: #ffffff;
+    border-radius: 22px;
+    box-shadow: 0 6px 10px rgba(15, 23, 42, 0.06);
+    padding: 16px 20px 18px;
+}
+
+.thread-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.thread-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.thread-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 20px;
+}
+
+.thread-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Nombre + fecha, con un poquito de separación */
+.thread-username {
+    font-weight: 700;
+    font-size: 15px;
+    color: #111827;
+    margin-bottom: 2px;
+}
+
+.thread-date {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* Botón "Respuestas" como texto plano azul */
+.thread-replies-button {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 600;
+    color: #6EC1E4;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+}
+
+/* Texto del hilo */
+.thread-text {
+    margin: 4px 0 0 0;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .threads-wrapper {
+        padding: 24px 16px 32px;
+    }
+
+    .threads-new-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .threads-new-button {
+        align-self: flex-end;
+    }
+
+    .threads-container {
+        padding: 14px 12px 18px;
+    }
+}
+
+/* MODAL "HILOS DENTRO" (RESPUESTAS) */
+
+.thread-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.thread-modal-overlay.show {
+    display: flex;
+}
+
+/* Card grande del modal */
+.thread-modal-card {
+    width: 760px;
+    max-width: 96%;
+    max-height: 90vh;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 16px 38px rgba(15, 23, 42, 0.35);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Barra superior con X */
+.thread-modal-topbar {
+    background: #ffffff;
+    padding: 8px 12px;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.thread-modal-close {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("images/xcerrar.svg"); /* cambia el nombre si tu X se llama distinto */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+    padding: 0;
+}
+
+/* Contenido interior scrollable */
+.thread-modal-content {
+    padding: 12px 20px 10px 20px;
+    overflow-y: auto;
+}
+
+/* Hilo principal arriba con más aire */
+.thread-modal-main {
+    padding: 12px 0 18px 0;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 12px;
+}
+
+.thread-modal-main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.thread-modal-main-reply-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: #6EC1E4;
+}
+
+/* Lista de respuestas */
+.thread-modal-replies {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cada respuesta separada */
+.thread-reply {
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Más espacio entre el header (avatar + nombre + fecha) y el texto
+   del hilo principal dentro del modal */
+.thread-modal-main .thread-text {
+    margin-top: 12px;   /* antes era 4px */
+}
+
+/* Más espacio entre el header de cada respuesta y su texto */
+.thread-modal-replies .thread-reply-header {
+    margin-bottom: 10px;  /* antes 6px */
+}
+
+.thread-modal-replies .thread-reply-text {
+    margin-top: 2px;      /* pequeño aire extra */
+}
+
+.thread-reply:last-child {
+    border-bottom: none;
+}
+
+.thread-reply-header {
+    margin-bottom: 6px;
+}
+
+.thread-reply-text {
+    margin: 0;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+/* Footer del modal: input "Añadir comentario..." */
+.thread-modal-footer {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 8px;
+    margin-top: 6px;
+    background: #f9fafb;
+}
+
+.thread-modal-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 10px 0;
+}
+
+.thread-modal-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    font-size: 18px;
+}
+
+.thread-modal-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.thread-modal-input {
+    flex: 1;
+    border: none;
+    border-bottom: 1px solid #d1d5db;
+    padding: 8px 6px;
+    font-size: 14px;
+    outline: none;
+    background: transparent;
+}
+
+.thread-modal-input::placeholder {
+    color: #9ca3af;
+}
+
+.thread-modal-input:focus {
+    border-color: #6EC1E4;
+}
+
+.thread-modal-publish {
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4b5563;
+    cursor: pointer;
+    padding: 0 4px;
+}
