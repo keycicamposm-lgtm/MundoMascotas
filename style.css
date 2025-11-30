@@ -1089,7 +1089,7 @@ html, body {
 }
 
 .comment-modal-image-wrapper {
-    background: gray;
+    background: white; 
 }
 
 .comment-modal-image {
