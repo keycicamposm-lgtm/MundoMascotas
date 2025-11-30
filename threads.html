@@ -101,7 +101,12 @@
             </div>
         </div>
     </div>
-
+ <div class="sidebar-profile" id="btnProfile">
+    <div class="sidebar-profile-avatar">🐾</div>
+    <div class="sidebar-profile-text">
+        <span>Perfil de Usuario</span>
+    </div>
+</div>
     <script>
         // USUARIO ACTUAL (simulado)
         const currentUser = {
@@ -437,5 +442,10 @@
             });
         });
     </script>
+    <script>
+    document.getElementById("btnProfile").addEventListener("click", function() {
+        window.location.href = "profile.html";
+    });
+</script>
 </body>
 </html>

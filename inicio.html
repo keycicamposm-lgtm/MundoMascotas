@@ -16,13 +16,13 @@
 
         <!-- COLUMNA IZQUIERDA (panel blanco) -->
         <aside class="inicio-sidebar">
-
-            <!-- Botón de perfil al fondo del panel -->
-            <div class="inicio-sidebar-profile" onclick="window.location.href='profile.html'">
-            🐾
-            </div>
         </aside>
-     
+     <div class="sidebar-profile" id="btnProfile">
+    <div class="sidebar-profile-avatar">🐾</div>
+    <div class="sidebar-profile-text">
+        <span>Perfil de Usuario</span>
+    </div>
+</div>
         <!-- Contenido principal de la página de inicio -->
         <main class="inicio-wrapper">
 
@@ -169,7 +169,7 @@
             }
             ];
 
-        // Cuando tengamos la base de datos, aquí llamamos a la función real: const posts = await getPostsFromFirebase();
+        // Cuando tengamos la base de datos, aquí llamamos a la función real: const posts = await getPostsFromFirebase(); o mongo
         renderInicio(mockPosts);
         }
 
@@ -244,5 +244,10 @@
       });
 
       </script>
+      <script>
+    document.getElementById("btnProfile").addEventListener("click", function() {
+        window.location.href = "profile.html";
+    });
+</script>
 </body>
 </html>
