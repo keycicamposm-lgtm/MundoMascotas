@@ -93,7 +93,47 @@
         </div>
     </div>
 
-      <script>
+    <!-- MODAL: CREAR NUEVA PUBLICACIÓN -->
+    <div id="post-modal" class="post-modal-overlay">
+        <div class="post-modal-card">
+            
+            <!-- Barra superior con titulo y X -->
+             <header class="post-modal-header">
+                <span>Crear nueva publicación</span>
+                <button id="post-modal-close"
+                        class="post-modal-close"
+                        aria-label="Cerrar"></button>
+             </header>
+
+            <!-- Contenido del card de nueva publicación -->
+            <div class="post-modal-body">
+                <div id="post-modal-placeholder" class="post-modal-placeholder">
+                    <div class="post-modal-icon"></div>
+                </div>
+
+                <!-- Vista Previa -->
+              <div id="post-modal-preview" class="post-modal-preview">
+                <img id="post-image-preview" src="images/imagepreview.svg" alt="Vista previa de la imagen">
+              </div>
+            </div>
+
+              <!-- Footer con boton principal -->
+               <footer class="post-modal-footer">
+                <button id="post-select-image" class="post-modal-main-button">
+                    Seleccionar imagen
+                </button>
+
+                <button id="post-publish" class="post-modal-main-button post-modal-main-button--publish">
+                    Publicar
+                </button>
+               </footer>
+
+               <!-- Inputo real de archivo (oculto) -->
+                <input type="file" id="post-image-input" accept="image/*" hidden>
+        </div>
+    </div>
+
+    <script>
         // Aquí guardamos los posts que vienen de la base de datos
         let postsGlobal = [];
 
@@ -173,7 +213,7 @@
                 userAvatarUrl: 'images/AvatarRegister.svg',
                 commentPreview: 'Otro comentario'
             }
-            ];
+        ];
 
         // Cuando tengamos la base de datos, aquí llamamos a la función real: const posts = await getPostsFromFirebase(); o mongo
         renderInicio(mockPosts);
@@ -193,69 +233,142 @@
             document.getElementById('comment-modal').classList.add('show');
         }
 
-        /* Cargar el tabbar */
+         /* Cargar el tabbar y configurar modales */
         document.addEventListener('DOMContentLoaded', () => {
-        
+        /* TABBAR */
         const container = document.getElementById('tabbar-container');
 
         fetch('tabbar.html')
-          .then(response => response.text())
-          .then(html => {
+            .then(response => response.text())
+            .then(html => {
             container.innerHTML = html;
 
             const topButtons = container.querySelectorAll('.friends-icon');
             topButtons.forEach(btn => {
-              btn.addEventListener('click', () => {
+                btn.addEventListener('click', () => {
                 topButtons.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-              });
+                });
             });
 
             const homeBtn = container.querySelector('.friends-icon--home');
             if (homeBtn) homeBtn.classList.add('active');
-          })
-          .catch(err => console.error('Error cargando tabbar:', err));
+            })
+            .catch(err => console.error('Error cargando tabbar:', err));
 
-        /* En espera de la base de datos, por ahora usamos los datos MOCK */
+        /* FEED MOCK */
         loadPostsMock();
 
-        // MODAL
-        const modal = document.getElementById('comment-modal');
-        const closeModalBtn = document.getElementById('comment-modal-close');
+        /* MODAL DE COMENTARIOS */
+        const modalComentarios   = document.getElementById('comment-modal');
+        const closeModalBtn      = document.getElementById('comment-modal-close');
 
         // Cerrar con la x
         closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('show');
+            modalComentarios.classList.remove('show');
             document.getElementById('comment-modal-input').value = '';
         });
 
         // Cerrar al hacer clic fuera del card
-        modal.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.classList.remove('show');
+        modalComentarios.addEventListener('click', (event) => {
+            if (event.target === modalComentarios) {
+                modalComentarios.classList.remove('show');
                 document.getElementById('comment-modal-input').value = '';
             }
         });
 
         // Abrir modal al hacer clic en el botón de comentar
         document.addEventListener('click', (event) => {
-            const btn = event.target.closest('.inicio-comment-button'); // va almacenando donde ocurrió el botón, para así definir si continuar o no
+            const btn = event.target.closest('.inicio-comment-button');
             if (!btn) return;
 
-            const card = btn.closest('.inicio-card'); // ubica exactamente en qué publicación se está comentando
-            const postId = card.dataset.postId; // toma el id de la publicación 
-            const post = postsGlobal.find(p => p.id === postId); // busca el post en el array global
+            const card   = btn.closest('.inicio-card');
+            const postId = card.dataset.postId;
+            const post   = postsGlobal.find(p => p.id === postId);
             if (!post) return;
 
-            abrirModalComentarios(post); // abre el modal con los datos del post
-        })
-      });
+            abrirModalComentarios(post);
+        });
 
-      </script>
-      <script>
-    document.getElementById("btnProfile").addEventListener("click", function() {
-        window.location.href = "profile.html";
+        /* BOTÓN PERFIL (sidebar-profile) */
+        const btnProfile = document.getElementById('btnProfile');
+        if (btnProfile) {
+            btnProfile.addEventListener('click', () => {
+                window.location.href = 'profile.html';
+            });
+        }
+
+        /* MODAL CREAR PUBLICACIÓN */
+        const createPostButton = document.getElementById('create-post-button');
+
+        const postModal = document.getElementById('post-modal');
+        const postModalClose = document.getElementById('post-modal-close');
+        const placeholder = document.getElementById('post-modal-placeholder');
+        const previewWrapper = document.getElementById('post-modal-preview');
+        const previewImg = document.getElementById('post-image-preview');
+        const fileInput = document.getElementById('post-image-input');
+        const selectImageBtn = document.getElementById('post-select-image');
+        const publishBtn = document.getElementById('post-publish');
+
+          function resetPostModal() {
+            if (!placeholder) return; // por si el HTML todavía no está
+            placeholder.style.display = 'flex';
+            previewWrapper.style.display = 'none';
+            selectImageBtn.style.display = 'inline-block';
+            publishBtn.style.display = 'none';
+            previewImg.src = '';
+            fileInput.value = '';
+        }
+
+        if (createPostButton && postModal) {
+        // Abrir modal al hacer clic en el botón flotante +
+            createPostButton.addEventListener('click', () => {
+                resetPostModal();
+                postModal.classList.add('show');
+            });
+
+            // Cerrar con la X
+            postModalClose.addEventListener('click', () => {
+                postModal.classList.remove('show');
+            });
+
+            // Cerrar al hacer clic fuera del card
+            postModal.addEventListener('click', (e) => {
+                if (e.target === postModal) {
+                    postModal.classList.remove('show');
+                }
+            });
+
+            // Abrir selector de archivos
+            selectImageBtn.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            // Cuando el usuario selecciona una imagen
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    previewImg.src = ev.target.result;
+
+                    // Cambiar a estado 2 (vista previa + botón Publicar)
+                    placeholder.style.display = 'none';
+                    previewWrapper.style.display = 'block';
+                    selectImageBtn.style.display = 'none';
+                    publishBtn.style.display = 'inline-block';
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Botón "Publicar"
+            publishBtn.addEventListener('click', () => {
+                // Aquí luego implementarás la lógica real de subir el post.
+                postModal.classList.remove('show');
+                resetPostModal();
+            });
+        }
     });
-</script>
+    </script>
 </body>
 </html>

@@ -1559,7 +1559,6 @@ html, body {
 }
 
 /* MODAL SUBIR PUBLICACIÓN */
-
 /* Botón flotante para crear publicación */
 .create-post-button {
     position: fixed;
@@ -1594,3 +1593,123 @@ html, body {
     transform: scale(1.05);
 }
 
+.post-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.45);
+    display: none; 
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.post-modal-overlay.show {
+    display: flex; 
+}
+
+.post-modal-card {
+    width: 500px;
+    max-width: 95%;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 16px 38px rgba(15, 23, 42, 0.25);
+    overflow: hidden;
+    font-family: Poppins, sans-serif;
+}
+
+/* Header superior modal */
+.post-modal-header {
+    background: #E8EAEB;
+    padding: 10px 40px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    position: relative;
+}
+
+.post-modal-close {
+    position: absolute;
+    top: 19%;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-image: url("images/xcerrar.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px 24px;
+    padding: 0;
+}
+
+/* Cuerpo del modal */
+.post-modal-body {
+    padding: 26px 40px 32px 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.post-modal-placeholder {
+    width: 260px;
+    height: 180x;
+    border: 2px dashed #d1d5db;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.post-modal-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 24px;
+    background-image: url("images/imagepreview.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 60px 60px;
+}
+
+/* vista previa modal */
+.post-modal-preview {
+    display: none; /* oculto hasta que se suba una imagen */
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.post-modal-preview img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Footer del modal */
+.post-modal-footer {
+    padding: 14px 40px 24px;
+    display: flex;
+    justify-content: center;
+}
+
+.post-modal-main-button {
+    border: none;
+    border-radius: 999px;
+    padding: 10px 24px;
+    background-color: #6EC1E4;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    min-width: 190px;
+}
+
+.post-modal-main-button:hover {
+    background-color: #56afd4;
+}
+
+/* El botón de publicar se esconde al inicio, se muestra con JS */
+.post-modal-main-button--publish {
+    display: none;
+}
