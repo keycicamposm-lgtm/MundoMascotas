@@ -819,8 +819,8 @@ html, body {
 }
 
 /* Panel blanco de la izquierda */
-.inicio-sidebar {
-    width: 90px;
+/*.inicio-sidebar {
+    width: 228px;
     background-color: #FFFFFF;
     border-right: 1px solid #e5e7eb;
     display: flex;
@@ -828,7 +828,7 @@ html, body {
     align-items: center;
     justify-content: flex-end;
     padding-bottom: 24px;
-}
+} */
 
 
 /* Contenedor general que centra el feed */
@@ -1112,6 +1112,7 @@ html, body {
 
 .comment-modal-image-wrapper {
     background: white; 
+    padding-bottom: 8px;
 }
 
 .comment-modal-image {
@@ -1153,6 +1154,7 @@ html, body {
     align-items: center;
     gap: 8px;
     margin-top: 6px;
+    padding-top: 8px;
 }
 
 .comment-modal-input {

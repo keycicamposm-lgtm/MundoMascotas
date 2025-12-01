@@ -17,10 +17,10 @@
         <!-- COLUMNA IZQUIERDA (panel blanco) -->
         <aside class="inicio-sidebar">
         </aside>
-     <div class="sidebar-profile" id="btnProfile">
-    <div class="sidebar-profile-avatar">🐾</div>
-    <div class="sidebar-profile-text">
-        <span>Perfil de Usuario</span>
+        <div class="sidebar-profile" id="btnProfile">
+        <div class="sidebar-profile-avatar">🐾</div>
+        <div class="sidebar-profile-text">
+            <span>Perfil de Usuario</span>
     </div>
 </div>
         <!-- Contenido principal de la página de inicio -->
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="comment-modal-input-row">
-                        <input type="text" class="comment-modal-input" placeholder="Añadir comentario...">
+                        <input type="text" id="comment-modal-input" class="comment-modal-input" placeholder="Añadir comentario...">
                         <button class="comment-modal-publish">Publicar</button>
                     </div>
                 </footer>
@@ -220,12 +220,14 @@
         // Cerrar con la x
         closeModalBtn.addEventListener('click', () => {
             modal.classList.remove('show');
+            document.getElementById('comment-modal-input').value = '';
         });
 
         // Cerrar al hacer clic fuera del card
         modal.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.classList.remove('show');
+                document.getElementById('comment-modal-input').value = '';
             }
         });
 
