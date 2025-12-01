@@ -794,13 +794,13 @@ html, body {
 }
 
 /* HOVER: se sube un poquitito */
-.inicio-sidebar-profile:hover {
+/* .inicio-sidebar-profile:hover {
     transform: translateY(-3px);
     box-shadow: 0 14px 28px rgba(15, 23, 42, 0.22);
-}
+} */
 
 /* Botón circular de perfil dentro del panel */
-.inicio-sidebar-profile {
+/* .inicio-sidebar-profile {
     position: fixed;          
     left: 13px;               
     bottom: 24px;             
@@ -816,7 +816,7 @@ html, body {
     font-size: 30px;
     cursor: pointer;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
+} */
 
 /* Panel blanco de la izquierda */
 /*.inicio-sidebar {
@@ -1470,16 +1470,16 @@ html, body {
 /* Más espacio entre el header (avatar + nombre + fecha) y el texto
    del hilo principal dentro del modal */
 .thread-modal-main .thread-text {
-    margin-top: 12px;   /* antes era 4px */
+    margin-top: 12px; 
 }
 
 /* Más espacio entre el header de cada respuesta y su texto */
 .thread-modal-replies .thread-reply-header {
-    margin-bottom: 10px;  /* antes 6px */
+    margin-bottom: 10px; 
 }
 
 .thread-modal-replies .thread-reply-text {
-    margin-top: 2px;      /* pequeño aire extra */
+    margin-top: 2px; /* pequeño aire extra */
 }
 
 .thread-reply:last-child {
@@ -1557,3 +1557,40 @@ html, body {
     cursor: pointer;
     padding: 0 4px;
 }
+
+/* MODAL SUBIR PUBLICACIÓN */
+
+/* Botón flotante para crear publicación */
+.create-post-button {
+    position: fixed;
+    bottom: 20px;      
+    right: 23px;       
+
+    background: white;
+    padding: 12px 18px;
+    border-radius: 50px;
+
+    width: 60px;
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    border: none;
+    z-index: 9999;
+
+    transition: all .2s ease;
+}
+
+.create-post-button img {
+    width: 320%;
+    height: 320%;
+    display: block;
+}
+
+.create-post-button:hover {
+    transform: scale(1.05);
+}
+
