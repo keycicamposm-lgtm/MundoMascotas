@@ -82,34 +82,26 @@
 
     <!--script para el tab bar-->
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const container = document.getElementById('tabbar-container');
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('tabbar-container');
 
-        fetch('tabbar.html')
-          .then(response => response.text())
-          .then(html => {
-            container.innerHTML = html;
+  fetch('tabbar.html')
+    .then(response => response.text())
+    .then(html => {
+      container.innerHTML = html;
 
-            const topButtons = container.querySelectorAll('.friends-icon');
-            topButtons.forEach(btn => {
-              btn.addEventListener('click', () => {
-                topButtons.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-              });
-            });
-          })
-          .catch(err => {
-            console.error('Error cargando tabbar:', err);
-          });
+      const topButtons = container.querySelectorAll('.friends-icon');
+      topButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          topButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        });
       });
-    </script>
-
-    <div class="sidebar-profile" id="btnProfile">
-    <div class="sidebar-profile-avatar">🐾</div>
-    <div class="sidebar-profile-text">
-        <span>Perfil de Usuario</span>
-    </div>
-</div>
+      const friendsBtn = container.querySelector('.friends-icon--friends');
+      if (friendsBtn) friendsBtn.classList.add('active');
+    })
+    .catch(err => console.error('Error cargando tabbar:', err));
+});
 
 
         <script>
